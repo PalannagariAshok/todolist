@@ -12,6 +12,15 @@ function App() {
 
   const [indexValue, setIndexValue] = useState(null);
 
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://dummyjson.com/products").then((el) => {
+      console.log(el.data.products);
+      setProducts(el.data.products);
+    });
+  }, []);
+
   useEffect(() => {
     console.log([{ age: 40 }, { age: 20 }].filter((value) => value.age === 40));
   }, []);
@@ -22,6 +31,15 @@ function App() {
 
       <button
         onClick={() => {
+          axios
+            .post("https://dummyjson.com/posts/add", {
+              title: username,
+              userId: 5,
+            })
+            .then((el) => {
+              console.log("post", el.data);
+            });
+
           if (actionName === "Add") {
             setDataSet([
               ...dataSet,
@@ -69,10 +87,26 @@ function App() {
           </button>
         </div>
       ))}
-
-      {["harsha", "ashok"].map((value) => (
-        <div>{value}</div>
-      ))}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100vw",
+          justifyContent: "space-evenly",
+        }}
+      >
+        {products.map((value) => (
+          <>
+            <div style={{ border: "1px solid black" }}>
+              <img
+                src={value.images[0]}
+                style={{ height: "80px", width: "100px" }}
+              />
+              <h5>{value.title}</h5>
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 }

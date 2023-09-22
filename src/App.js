@@ -67,7 +67,7 @@ function App() {
       </button>
 
       {dataSet.map((value, index) => (
-        <div>
+        <div key={index}>
           {value.name},{value.branch},{index}{" "}
           <button
             onClick={() => {
@@ -95,16 +95,14 @@ function App() {
           justifyContent: "space-evenly",
         }}
       >
-        {products.map((value) => (
-          <>
-            <div style={{ border: "1px solid black" }}>
-              <img
-                src={value.images[0]}
-                style={{ height: "80px", width: "100px" }}
-              />
-              <h5>{value.title}</h5>
-            </div>
-          </>
+        {products.map((value, index) => (
+          <div style={{ border: "1px solid black" }} key={index}>
+            <img
+              src={value.images[0]}
+              style={{ height: "80px", width: "100px" }}
+            />
+            <h5>{value.title}</h5>
+          </div>
         ))}
       </div>
     </div>
